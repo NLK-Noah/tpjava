@@ -34,6 +34,7 @@ public class QRcode {
      * @param data is a n x n square matrix
      */
     public QRcode(boolean [][] data) {
+
         this.data = data;
     }
 
@@ -43,10 +44,34 @@ public class QRcode {
      * @param o the other matrix to compare to
      * @return
      */
+    public boolean[][] rotate() {
+        int n = data.length;
+        boolean[][] R= new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                R[j][n - 1 - i] = data[i][j];
+            }
+        }
+
+        return R;
+    }
     @Override
     public boolean equals(Object o) {
-        // TODO
-         return false;
+        if (!(o instanceof QRcode)) {
+            return false;
+        }
+        QRcode other = (QRcode) o;
+
+
+        for (int i = 0; i < 4; i++) {
+            if (Arrays.deepEquals(this.data, other.data)) {
+                return true;
+            }
+            this.data = rotate();
+        }
+
+        return false;
     }
 
 

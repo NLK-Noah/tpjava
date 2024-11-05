@@ -72,7 +72,7 @@ public class Pascal {
      * @return the nth row of Pascal triangle
      */
     public static int[] pascal(int n) {
-         return null;
+        return null;
     }
 
 

@@ -19,6 +19,12 @@ public class JavelinThrowTest {
             ..xx...
             ....xxx
      */
+    private  static final char[][] entire = {
+            {'#','#','#','#'},
+            {'#','#','#','#'},
+            {'#','#','#','#'},
+            {'#','#','#','#'},
+    };
     private static final char[][] emptyField = {
             { '.', '.', '.', '.', 'x', 'x', 'x'},
             { '.', '.', 'x', 'x', '.', '.', '.'},
@@ -157,6 +163,69 @@ public class JavelinThrowTest {
     }
 
     // Don't forget to make your own tests!!!
+    private static final char[][] emptyFieldValid = {
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+            { 'x', 'x', 'x', 'x', '.', '.', '.'},
+            { 'x', 'x', '.', '.', '.', '.', '.'},
+            { '.', '.', '.', '.', '.', '.', '.'},
+            { 'x', 'x', '.', '.', '.', '.', '.'},
+            { 'x', 'x', 'x', 'x', '.', '.', '.'},
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+    };
 
+    @Test
+    @Grade(value = 1, cpuTimeout = 1)
+    public void testFindJavelinInEntireField() {
+        for (int y=0; y < emptyField.length; y++) {
+            for (int x = 0; x< emptyField[0].length; x++) {
+                char[][] field = makeCopyOfArray(emptyField);
+                field[y][x] = '#';
+                JavelinThrow.JavelinPosition jp = JavelinThrow.findJavelin(field);
+                assertTrue(jp.x==x && jp.y==y);
+            }
+        }
+    }
 
+    @Test
+    @Grade(value = 1, cpuTimeout = 1)
+    public void testEntireField() {
+        int sum = 0;
+        for (int y = 0; y < emptyField.length; y++) {
+            for (int x = 0; x < emptyField[0].length; x++) {
+                char[][] field = makeCopyOfArray(emptyField);
+                field[y][x] = '#';
+                sum++;
+                System.out.println(sum);
+                System.out.println(JavelinThrow.isThrowValid(field));
+                assertEquals(JavelinThrow.isThrowValid(field), emptyFieldValid[y][x] != 'x');
+            }
+        }
+    }
+
+    private static final char[][] emptyLargeFieldValid = {
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '.', '.'},
+            { 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.'},
+            { 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '.'},
+            { '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
+            { 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '.'},
+            { 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.'},
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '.', '.'},
+            { 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+    };
+
+    @Test
+    @Grade(value = 1, cpuTimeout = 1)
+    public void testEntireLargeField() {
+        int sum = 0 ;
+        for (int y = 0; y < emptyLargeField.length; y++) {
+            for (int x = 0; x < emptyLargeField[0].length; x++) {
+                char[][] field = makeCopyOfArray(emptyLargeField);
+                field[y][x] = '#';
+                sum++;
+                System.out.println(sum);
+                assertEquals(JavelinThrow.isThrowValid(field), emptyLargeFieldValid[y][x] != 'x');
+            }
+        }
+    }
 }

@@ -8,7 +8,7 @@ package basics;
                 ........xxxxxx
                 .....xxx......
                 ..xxx.........
-                xx......#.....    Valid throw
+                xx......#..h...    Valid throw
        Thrower  ..............
                 xx............
                 ..xxx.........
@@ -56,6 +56,8 @@ package basics;
 // However, you must not modify the types and parameters of the existing
 // methods.
 
+import java.awt.*;
+
 public class JavelinThrow {
 
     public static class JavelinPosition {
@@ -75,13 +77,13 @@ public class JavelinThrow {
      * Here, x indicates the position on the horizontal axis and y indicates
      * the position on the vertical axis. In the below picture, the
      * javelin is at position x=3, y=0, i.e., in element field[0][3]:
-     *
-     *              ...#.............
-     *              .................
-     *    Thrower   ....the field....
-     *              .................
-     *              .................
-     *
+     * <p>
+     * ...#.............
+     * .................
+     * Thrower   ....the field....
+     * .................
+     * .................
+     * <p>
      * The field is always rectangular.
      * The javelin is indicated by a "#" character. The boundaries
      * are indicated by "x" characters. Look at the examples in the test.
@@ -91,19 +93,67 @@ public class JavelinThrow {
      * @return the position of the javelin in the field
      */
     public static JavelinPosition findJavelin(char[][] field) {
-         // TODO
-         return new JavelinPosition(-1,-1);
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j] == '#') {
+                    int x = j ;
+                    int y = i ;
+                    return new JavelinPosition(x, y);
+                }
+            }
+        }
 
+
+        return null;
     }
+     // Vérifie même si le lancer touche la limite du terrain ex 'x#x'
+     public static boolean Ligne(char[][] field, int i) {
+         int n = field[i].length;
+         int m = field.length;
+         Boolean result = false;
+         for (int j = 0; j < n; j++) {
+             if (field[i][j] == 'x'){
+                 result=false;
+             }
+             if (field[i][j] == '#') {
+                 result=true;
+                 if(j == n-1){
+                     if(field[i][j-1] == 'x'){
+                         result=false;
+                     }
+                 } else if (j != n-1) {
+                     if (field[i][j+1] == 'x') {
+                         result = false;
+                     }
+                 } else if (transpose(field)[i][n-j] == 'x'){
+                     result=false;
+                 }
+             }
+         }
+         return result;}
+
+    public static int[][] transpose(char[][] field) {
+        char [][] matrix = field;
+        int rows = matrix.length;
+        int[][] transposedMatrix = new int[rows][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < rows; j++) {
+                transposedMatrix[j][i] = matrix[i][j];
+            }
+        }
+        return transposedMatrix;
+    }
+
+
 
     /**
      * This method takes a two-dimensional array representing the javelin throw
      * field and returns true if the javelin throw was valid. Otherwise, it
      * returns false.
-     *
+     * <p>
      * The field boundaries are indicated by "x" characters. The position of the
      * landed javelin is indicated by "#". All other characters can be ignored.
-     *
+     * <p>
      * The field is always rectangular and has two boundary lines, similar to
      * those shown in the above example. Look at the examples in the tests.
      * There is always exactly one javelin on the field.
@@ -114,9 +164,23 @@ public class JavelinThrow {
     public static boolean isThrowValid(char[][] field) {
         int fieldWidth = field[0].length;
         int fieldHeight = field.length;
+        int[] tab = new int[fieldHeight];
 
-         // TODO
-         return false;
-
+        for (int i = 0; i < field.length; i++) {
+            if (!Ligne(field, i)) {
+                tab[i] = 0;
+            } else {
+                tab[i] = 1;
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < tab.length; i++) {
+            sum += tab[i];
+        }
+        if (sum >= 1) {
+            return true;
+        }
+        return false;
     }
 }
+
