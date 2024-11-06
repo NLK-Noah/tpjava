@@ -2,9 +2,9 @@ package basics;
 
 /*
     Javelin throw = (fr) Lancer du javelot
-    
+
     This is the field of a javelin throw competition seen from above:
-   
+
                 ........xxxxxx
                 .....xxx......
                 ..xxx.........
@@ -14,7 +14,7 @@ package basics;
                 ..xxx.........
                 .....xxx......
                 ........xxxxxx
-    
+
     The thrower stands on the left side of the field and throws the javelin
     to the right. The "x" mark the boundaries of the valid landing area.
     The throw is valid only if the javelin (represented by "#") lands inside
@@ -56,10 +56,9 @@ package basics;
 // However, you must not modify the types and parameters of the existing
 // methods.
 
-import java.awt.*;
+
 
 public class JavelinThrow {
-
     public static class JavelinPosition {
         int x;
         int y;
@@ -71,89 +70,28 @@ public class JavelinThrow {
     }
 
     /**
-     * This method finds the javelin in the field.
-     * It returns an object of the class JavelinPosition where x and y
-     * mean that the javelin is in the element field[y][x] of the field.
-     * Here, x indicates the position on the horizontal axis and y indicates
-     * the position on the vertical axis. In the below picture, the
-     * javelin is at position x=3, y=0, i.e., in element field[0][3]:
-     * <p>
-     * ...#.............
-     * .................
-     * Thrower   ....the field....
-     * .................
-     * .................
-     * <p>
-     * The field is always rectangular.
-     * The javelin is indicated by a "#" character. The boundaries
-     * are indicated by "x" characters. Look at the examples in the test.
-     * There is always exactly one javelin on the field.
-     *
-     * @param field The field. It's never null.
-     * @return the position of the javelin in the field
-     */
+     * Cette méthode trouve la position du javelot sur le terrain.
+     * @param field Le terrain, jamais null.
+     * @return La pos**/
     public static JavelinPosition findJavelin(char[][] field) {
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                if (field[i][j] == '#') {
-                    int x = j ;
-                    int y = i ;
+        for (int y = 0; y < field.length; y++) {
+            for (int x = 0; x < field[y].length; x++) {
+                if (field[y][x] == '#') {
                     return new JavelinPosition(x, y);
                 }
             }
         }
-
-
-        return null;
+        return new JavelinPosition(-1,-1);
     }
-     // Vérifie même si le lancer touche la limite du terrain ex 'x#x'
-     public static boolean Ligne(char[][] field, int i) {
-         int n = field[i].length;
-         int m = field.length;
-         Boolean result = false;
-         for (int j = 0; j < n; j++) {
-             if (field[i][j] == 'x'){
-                 result=false;
-             }
-             if (field[i][j] == '#') {
-                 result=true;
-                 if(j == n-1){
-                     if(field[i][j-1] == 'x'){
-                         result=false;
-                     }
-                 } else if (j != n-1) {
-                     if (field[i][j+1] == 'x') {
-                         result = false;
-                     }
-                 } else if (transpose(field)[i][n-j] == 'x'){
-                     result=false;
-                 }
-             }
-         }
-         return result;}
-
-    public static int[][] transpose(char[][] field) {
-        char [][] matrix = field;
-        int rows = matrix.length;
-        int[][] transposedMatrix = new int[rows][rows];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < rows; j++) {
-                transposedMatrix[j][i] = matrix[i][j];
-            }
-        }
-        return transposedMatrix;
-    }
-
-
 
     /**
      * This method takes a two-dimensional array representing the javelin throw
      * field and returns true if the javelin throw was valid. Otherwise, it
      * returns false.
-     * <p>
+     *
      * The field boundaries are indicated by "x" characters. The position of the
      * landed javelin is indicated by "#". All other characters can be ignored.
-     * <p>
+     *
      * The field is always rectangular and has two boundary lines, similar to
      * those shown in the above example. Look at the examples in the tests.
      * There is always exactly one javelin on the field.
@@ -164,23 +102,26 @@ public class JavelinThrow {
     public static boolean isThrowValid(char[][] field) {
         int fieldWidth = field[0].length;
         int fieldHeight = field.length;
-        int[] tab = new int[fieldHeight];
+        JavelinPosition JP = findJavelin(field);
+        boolean boundaryFound = false;
 
-        for (int i = 0; i < field.length; i++) {
-            if (!Ligne(field, i)) {
-                tab[i] = 0;
-            } else {
-                tab[i] = 1;
+        for (int y = 0; y < JP.y; y++) {
+            if (field[y][JP.x] == 'x') {
+                boundaryFound = true;
+                break;
             }
         }
-        int sum = 0;
-        for (int i = 0; i < tab.length; i++) {
-            sum += tab[i];
+
+        if (boundaryFound) {
+            boundaryFound = false;
+            for (int y = JP.y + 1; y < fieldHeight; y++) {
+                if (field[y][JP.x] == 'x') {
+                    boundaryFound = true;
+                    break;
+                }
+            }
         }
-        if (sum >= 1) {
-            return true;
-        }
-        return false;
+        return boundaryFound;
     }
 }
 
