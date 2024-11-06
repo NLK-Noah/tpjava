@@ -24,11 +24,16 @@ public class FourInARow {
     private static final char EMPTY = '-';
     private static final char[] PLAYERS = {'X', 'O'};
 
-     // add your own instance variables here
+    private static final char[][] jeu = new char[ROWS][COLUMNS];
 
     public FourInARow() {
-         // add your own code here
+         for (int row = 0; row < ROWS; row++) {
+             for (int column = 0; column < COLUMNS; column++) {
+                 jeu[row][column] = EMPTY;
+             }
+         }
     }
+
 
     /**
      * Play a piece in column j for the given player.
@@ -36,9 +41,18 @@ public class FourInARow {
      * @param player the player (X or O)
      * @throws IllegalArgumentException if j is not a valid column index or if the column is full or if the player is not X or O
      */
-    public void play(int j, char player) {
-         // add your own code here
+    public void play(int j, char player)throws IllegalArgumentException {
+        if(j<0 || j >= COLUMNS || jeu[0][j] == ('X') || jeu[0][j] == 'O'|| (player !='X' && player !='O')){
+            throw new IllegalArgumentException();
+        }
+        for (int i = ROWS - 1; i >= 0; i--) {
+            if (jeu[i][j] == EMPTY) {
+                jeu[i][j] = player;
+                break;
+            }
+        }
     }
+
 
 
     /**
@@ -47,8 +61,67 @@ public class FourInARow {
      * @return true if the player has won the game
      * @throws IllegalArgumentException if the player is not X or O
      */
-    public boolean hasWon(char player) {
-         // add your own code here
+    public boolean hasWon(char player) throws IllegalArgumentException {
+         if(player !='X' && player !='O'){
+             throw new IllegalArgumentException();
+         }
+         // ligne
+        for (int i = 0 ; i < ROWS ; i++) {
+            int sum = 0;
+            for (int j = 0 ; j < COLUMNS ; j++) {
+
+                if (jeu[i][j] == player) {
+                    sum++;
+                }else{
+                    sum = 0;
+                }
+                if(sum == 4){
+                    return true;
+            }
+
+            }
+        }
+
+        // col
+        for (int i = 0 ; i < COLUMNS ; i++) {
+            int sum = 0;
+            for (int j = 0 ; j < ROWS ; j++) {
+
+                if (jeu[j][i] == player) {
+                    sum++;
+                }else{
+                    sum = 0;
+                }
+                if(sum == 4){
+                    return true;
+                }
+
+            }
+        }
+        // diag montante
+        for (int r = ROWS - 1; r >= 3; r--) {
+            for (int c = 0; c < COLUMNS - 3; c++) {
+                if (jeu[r][c] == player &&
+                        jeu[r - 1][c + 1] == player &&
+                        jeu[r - 2][c + 2] == player &&
+                        jeu[r - 3][c + 3] == player) {
+                    return true;
+                }
+            }
+        }
+
+        // diag descendante
+        for (int r = 0; r < ROWS - 3; r++) {
+            for (int c = 0; c < COLUMNS - 3; c++) {
+                if (jeu[r][c] == player &&
+                        jeu[r + 1][c + 1] == player &&
+                        jeu[r + 2][c + 2] == player &&
+                        jeu[r + 3][c + 3] == player) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 }

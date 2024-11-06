@@ -2,50 +2,60 @@ package basics;
 
 public class Matrix {
 
-    /**
-     * Create a matrix from a String.
-     *
-     * The string if formatted as follow:
-     *  - Each row of the matrix is separated by a newline
-     *    character \n
-     *  - Each element of the rows are separated by a space
-     *
-     *  @param s The input String
-     *  @return The matrix represented by the String
-     */
     public static int[][] buildFrom(String s) {
-         return null;
+        String[] rows = s.split("\n");
+        int numRows = rows.length;
+
+        int[][] matrix = new int[numRows][];
+
+        for (int i = 0; i < numRows; i++) {
+            String[] elements = rows[i].trim().split("\\s+");
+            int numCols = elements.length;
+            matrix[i] = new int[numCols];
+            for (int j = 0; j < numCols; j++) {
+                matrix[i][j] = Integer.parseInt(elements[j]);
+            }
+        }
+
+        return matrix;
     }
-
-
-    /**
-     * Compute the sum of the element in a matrix
-     *
-     * @param matrix The input matrix
-     * @return The sum of the element in matrix
-     */
     public static int sum(int[][] matrix) {
-         return 0;
+        int sum = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                sum += matrix[i][j];
+            }
+        }
+        return sum;
     }
 
-    /**
-     * Compute the transpose of a matrix
-     *
-     * @param matrix The input matrix
-     * @return A new matrix that is the transpose of matrix
-     */
     public static int[][] transpose(int[][] matrix) {
-         return null;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] transposedMatrix = new int[cols][rows];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transposedMatrix[j][i] = matrix[i][j];
+            }
+        }
+        return transposedMatrix;
     }
 
-    /**
-     * Compute the product of two matrix
-     *
-     * @param matrix1 A n x m matrix
-     * @param matrix2 A m x k matrix
-     * @return The n x k matrix product of matrix1 and matrix2
-     */
     public static int[][] product(int[][] matrix1, int[][] matrix2) {
-         return null;
+        int n = matrix1.length;
+        int m = matrix1[0].length;
+        int k = matrix2[0].length;
+
+        int[][] productMatrix = new int[n][k];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k; j++) {
+                for (int l = 0; l < m; l++) {
+                    productMatrix[i][j] += matrix1[i][l] * matrix2[l][j];
+                }
+            }
+        }
+        return productMatrix;
     }
 }
