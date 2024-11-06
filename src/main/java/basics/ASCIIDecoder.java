@@ -19,8 +19,35 @@ public class ASCIIDecoder {
      *
      * You should NEVER return null or an array containing null.
      */
-    public static String [] decode(int[] forbidden, String[][] sentences){
-         return null;
+    public static String[] decode(int[] forbidden, String[][] sentences) {
+        String[] decodedSentences = new String[sentences.length];
+
+        for (int i = 0; i < sentences.length; i++) {
+            StringBuilder decodedSentence = new StringBuilder();
+
+            for (int j = 0; j < sentences[i].length; j++) {
+                int codePoint = Integer.parseInt(sentences[i][j]);
+
+                if (!isForbidden(codePoint, forbidden)) {
+                    decodedSentence.appendCodePoint(codePoint);
+                }
+            }
+
+            decodedSentences[i] = decodedSentence.toString();
+        }
+
+        return decodedSentences;
+    }
+
+    private static boolean isForbidden(int codePoint, int[] forbidden) {
+        if (forbidden != null) {
+            for (int code : forbidden) {
+                if (code == codePoint) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

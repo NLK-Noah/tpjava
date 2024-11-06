@@ -72,9 +72,12 @@ public class Pascal {
      * @return the nth row of Pascal triangle
      */
     public static int[] pascal(int n) {
-        return null;
+        int[] row = new int[n];
+        row[0] = 1;
+        for (int i = 1; i < n; i++){
+            row[i] = row[i-1] *(n-i)/i;
+
+        }
+        return row;
     }
-
-
-
 }

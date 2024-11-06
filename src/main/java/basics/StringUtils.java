@@ -13,8 +13,34 @@ public class StringUtils {
      *          If there is no occurence of the delimiter, it should
      *          return an array of size 1 with the string at element 0
      */
-    public static String [] split(String str, char delimiter){
-         return null;
+    public static String[] split(String str, char delimiter) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == delimiter) {
+                count++;
+            }
+        }
+
+        if (count == 0) {
+            return new String[]{str};
+        }
+
+        String[] result = new String[count + 1];
+
+        int currentStart = 0;
+        int currentIndex = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == delimiter) {
+                result[currentIndex] = str.substring(currentStart, i);
+                currentIndex++;
+                currentStart = i + 1;
+            }
+        }
+
+        result[currentIndex] = str.substring(currentStart);
+
+        return result;
     }
 
 
@@ -28,7 +54,16 @@ public class StringUtils {
      *          in str
      */
     public static int indexOf(String str, String sub){
-         return 0;
+        int count = 0;
+        if ( str == null || sub == null || str.length() == 0 || sub.length() == 0 || sub.length() > str.length() ) {
+            return -1;
+        }
+        for (int i = 0; i <= str.length() - sub.length(); i++) {
+            if (str.substring(i, i + sub.length()).equals(sub)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
@@ -40,7 +75,8 @@ public class StringUtils {
      *          character put to lower case.
      */
     public static String toLowerCase(String str){
-         return null;
+        str = str.toLowerCase();
+        return str;
     }
 
 
@@ -55,7 +91,11 @@ public class StringUtils {
      * @return true if str is a palyndrome, false otherwise
      */
     public static boolean palindrome(String str){
-         return false;
+        String a = new StringBuilder(str).reverse().toString();
+        if (str.equals(a)) {
+            return true;
+        }
+        return false;
     }
 
 
