@@ -4,7 +4,7 @@ public class PatternMatching {
 
     public static int find(String value, String pattern) {
         int valueLength = value.length();
-        pattern= pattern.trim();
+        pattern= pattern.trim(); // permet de supprimer les espaces vides dans les strings
         System.out.println(pattern);
         int patternLength = pattern.length();
         System.out.println(patternLength);
