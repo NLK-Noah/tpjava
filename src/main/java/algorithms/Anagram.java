@@ -23,7 +23,18 @@ public class Anagram {
      * letter.
      **/
     public static int[] countAlphabet(String s) {
-         return null;
+        s = s.toLowerCase();
+        char[] chars = s.toCharArray();
+        char[] alphabet = new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        int[] counts = new int[26];
+        for (int i = 0; i < chars.length; i++) {
+            for (int j = 0; j < alphabet.length; j++) {
+                if (chars[i] == alphabet[j]) {
+                    counts[j]++;
+                }
+            }
+        }
+        return counts;
     }
 
 
@@ -42,6 +53,13 @@ public class Anagram {
      **/
     public static boolean isAnagram(String s1,
                                     String s2) {
-         return false;
-    }
+
+         int[] s = Anagram.countAlphabet(s1);
+         int[] t = Anagram.countAlphabet(s2);
+         for (int i = 0; i < s.length; i++) {
+             if (s[i] != t[i]) {
+                 return false;
+             }
+         }
+    return true;}
 }

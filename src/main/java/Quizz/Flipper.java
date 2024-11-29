@@ -13,7 +13,7 @@ public class Flipper {
         boolean[][] visited = new boolean[n][m];
         int count = 0;
 
-        while (x >= 0 && x < n && y >= 0 && y < m) {
+        while (x >= 0 && x < n -1 && y >= 0 && y < m -1) {
             if (!visited[x][y]) {
                 visited[x][y] = true;
                 count++;
