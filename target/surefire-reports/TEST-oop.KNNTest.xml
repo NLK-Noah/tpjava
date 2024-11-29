@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="algorithms.AnagramTest" time="0.191" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="oop.KNNTest" time="0.131" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,9 +12,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BE"/>
     <property name="sun.boot.library.path" value="/home/worknoah/.sdkman/candidates/java/21.0.5-tem/lib"/>
-    <property name="sun.java.command" value="/home/worknoah/IdeaProjects/tpjava/target/surefire/surefirebooter-20241129204127995_3.jar /home/worknoah/IdeaProjects/tpjava/target/surefire 2024-11-29T20-41-27_663-jvmRun1 surefire-20241129204127995_1tmp surefire_0-20241129204127995_2tmp"/>
+    <property name="sun.java.command" value="/home/worknoah/IdeaProjects/tpjava/target/surefire/surefirebooter-20241129224859021_3.jar /home/worknoah/IdeaProjects/tpjava/target/surefire 2024-11-29T22-48-58_687-jvmRun1 surefire-20241129224859021_1tmp surefire_0-20241129224859021_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="AnagramTest"/>
+    <property name="test" value="KNNTest"/>
     <property name="surefire.test.class.path" value="/home/worknoah/IdeaProjects/tpjava/target/test-classes:/home/worknoah/IdeaProjects/tpjava/target/classes:/home/worknoah/.m2/repository/io/github/ucl-ingi/JavaGrader/1.0.6/JavaGrader-1.0.6.jar:/home/worknoah/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/home/worknoah/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/worknoah/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/home/worknoah/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/home/worknoah/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.1/junit-jupiter-params-5.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-suite/1.9.1/junit-platform-suite-1.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-suite-api/1.9.1/junit-platform-suite-api-1.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-suite-engine/1.9.1/junit-platform-suite-engine-1.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-suite-commons/1.9.1/junit-platform-suite-commons-1.9.1.jar:/home/worknoah/.m2/repository/org/junit/platform/junit-platform-launcher/1.9.1/junit-platform-launcher-1.9.1.jar:/home/worknoah/.m2/repository/com/google/code/gson/gson/2.10/gson-2.10.jar:/home/worknoah/IdeaProjects/tpjava/libs/apiguardian-api-1.1.2.jar:/home/worknoah/IdeaProjects/tpjava/libs/gson-2.10.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-jupiter-api-5.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-jupiter-engine-5.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-jupiter-params-5.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-commons-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-engine-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-launcher-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-suite-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-suite-api-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-suite-commons-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/junit-platform-suite-engine-1.9.1.jar:/home/worknoah/IdeaProjects/tpjava/libs/opentest4j-1.2.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/worknoah"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/worknoah/IdeaProjects/tpjava/target/surefire/surefirebooter-20241129204127995_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/worknoah/IdeaProjects/tpjava/target/surefire/surefirebooter-20241129224859021_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-LTS"/>
     <property name="user.name" value="worknoah"/>
@@ -55,8 +55,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testAnagram" classname="algorithms.AnagramTest" time="0.083"/>
-  <testcase name="testCountAlphabet1" classname="algorithms.AnagramTest" time="0.027"/>
-  <testcase name="testCountAlphabet2" classname="algorithms.AnagramTest" time="0.016"/>
-  <testcase name="testCountAlphabet3" classname="algorithms.AnagramTest" time="0.017"/>
+  <testcase name="test1" classname="oop.KNNTest" time="0.068"/>
+  <testcase name="test2" classname="oop.KNNTest" time="0.015"/>
+  <testcase name="test3" classname="oop.KNNTest" time="0.021"/>
 </testsuite>

@@ -1,7 +1,11 @@
 package algorithms;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.function.Predicate;
+import java.util.Map;
+
+
 
 /**
  * This interface represents a collection of integers, similar to a set but allowing duplicates.
@@ -34,7 +38,7 @@ import java.util.function.Predicate;
  *
  */
 public interface Bag extends Iterable<Integer> {
-
+    Bag b = new BagImpl();
     /**
      * Adds the specified integer to the bag.
      * @param o The integer to add.
@@ -89,26 +93,27 @@ class BagImpl implements Bag {
     // or use any other class from the Java language to help you.
     // The time complexity of each method should be at most O(n) where n is the number of elements in the bag.
 
+    private Map<Integer, Integer> bag;
 
     public BagImpl() {
-		// TODO
+		bag = new HashMap<>();
     }
 
     @Override
     public void add(int o) {
-		// TODO
+		bag.merge(o, 1, Integer::sum);
 
     }
 
     @Override
     public void remove(int o) {
-		// TODO
+		bag.merge(o, 0, Integer::sum);
 
     }
 
     @Override
     public boolean isEmpty() {
-		// TODO
+		bag.clear();
          return false;
     }
 

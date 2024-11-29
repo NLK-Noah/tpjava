@@ -2,6 +2,8 @@ package oop;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -131,18 +133,33 @@ public class KNN {
      * @return the prediction of success. True if the number of successes
      *         among the k most similar students is > k/2, false otherwise
      */
-    public static boolean predictSuccess(Student [] students, double[] grades, int k) {
-        // TODO
-         return false;
-    }
+        public static boolean predictSuccess(Student [] students, double[] grades, int k) {
+            List<double[]> distances = new ArrayList<>();
+            for (Student student : students) {
+                double distance = euclideanDistance(student.grades, grades);
+                distances.add(new double[]{distance, student.success ? 1.0 : 0.0});
+            }
 
-    public static double euclideanDistance(double[] a, double[] b) {
-        double dist = 0;
-        for (int i = 0; i < a.length; i++) {
-            dist += Math.pow(a[i] - b[i], 2);
+            distances.sort(Comparator.comparingDouble(a -> a[0]));
+
+            int successCount = 0;
+            for (int i = 0; i < k; i++) {
+                if (distances.get(i)[1] == 1.0) {
+                    successCount++;
+                }
+            }
+
+            return successCount > k / 2;
         }
-        return Math.sqrt(dist);
-    }
+
+
+        public static double euclideanDistance(double[] a, double[] b) {
+            double dist = 0;
+            for (int i = 0; i < a.length; i++) {
+                dist += Math.pow(a[i] - b[i], 2);
+            }
+            return Math.sqrt(dist);
+        }
 
 
 }
