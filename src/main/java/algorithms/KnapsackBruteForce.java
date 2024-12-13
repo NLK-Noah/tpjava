@@ -34,7 +34,28 @@ public class KnapsackBruteForce {
      * @return
      */
     public static int knapsack(Item[] items, int capacity) {
-         return -1;
+         int maxValue = 0;
+         int currentValue = 0;
+
+         if(items.length == 0) {return 0;}
+
+         for (int i = 0; i < items.length; i++) {
+             if (items[i].weight < capacity) {
+                 if (items[i].value > maxValue) {
+                     maxValue = items[i].value;
+                 }
+             }
+         }
+         for (int i = 0; i < items.length-1; i++) {
+             if (items[i].weight + items[i+1].weight <=  capacity) {
+                 currentValue = items[i].value + items[i+1].value;
+                 System.out.println(currentValue);
+                 if (currentValue > maxValue) {
+                     maxValue = currentValue;
+                 }
+             }
+         }
+        return maxValue;
     }
 
 
