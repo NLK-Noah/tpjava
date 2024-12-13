@@ -1,4 +1,9 @@
 package algorithms;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Collections;
+import java.util.stream.*;
+import java.util.*;
 
 public class MaximumSumSubarray {
     
@@ -23,7 +28,7 @@ public class MaximumSumSubarray {
             }
             return false;
         }
-        
+
         @Override
         public String toString() {
             return String.format("(%d, %d)", this.start, this.end);
@@ -42,7 +47,27 @@ public class MaximumSumSubarray {
      * @return The position of the array for which the sum of its element is maximal (if there
      *          is a tie, the one that starts the earliest is returned)
      */
+    int sum = 0;
     public static ArrayIndex maximumSumSubarray(int [] array) {
-         return new ArrayIndex(-1, -1);
+        int maxSum = Integer.MIN_VALUE;
+        int currentSum = 0;
+        int start = 0, tempStart = 0, end = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            currentSum += array[i];
+
+            if (currentSum > maxSum) {
+                maxSum = currentSum;
+                start = tempStart;
+                end = i;
+            }
+
+            if (currentSum < 0) {
+                currentSum = 0;
+                tempStart = i + 1;
+            }
+        }
+
+        return new ArrayIndex(start, end);
     }
 }
