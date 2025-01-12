@@ -20,13 +20,23 @@ public class Fibonacci {
      * @throws IllegalArgumentException if n is negative.
      */
      public static long fibonacci(long n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("n should be non-negative");
-        }
-        if (n <= 1) {
-            return n;
-        }
-        return Math.addExact(fibonacci(n - 1) , fibonacci(n - 2)); // I use addExact to avoid silent overflow
-     }
+         if (n < 0) {
+             throw new IllegalArgumentException("n should be non-negative");
+         }
+         if (n <= 1) {
+             return n;
+         }
+         long x = 0;
+         long y = 1;
+         long i = 2;
+         long current = 0;
+         while (i <= n) {
+             current = Math.addExact(x, y);
+             x = y;
+             y = current;
+             i++;
+         }
 
+         return current;
+     }
 }
