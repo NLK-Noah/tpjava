@@ -160,7 +160,7 @@ public class Pentago {
      * @return Winner   the winning status of the game after the play (cf. above)
      */
     public Winner play(int i, int j, Player player, BoardSubpart subpart, RotationDirection direction) {
-        // TODO
+
          return null; // add your own code here
     }
 

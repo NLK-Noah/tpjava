@@ -32,7 +32,10 @@ public class MedianOfPairs {
      *
      */
     public static Pair median(List<Pair> list) {
-        // TODO
+        int length = list.size();
+        for(int i=0;i<length;i++) {
+            System.out.println(list.get(i));
+        }
          return null;
     }
 

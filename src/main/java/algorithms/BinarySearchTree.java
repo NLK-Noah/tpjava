@@ -26,7 +26,7 @@ import java.util.List;
  *
  */
 public class BinarySearchTree {
-    
+
     private Node root;             // root of BST
 
     private class Node {
@@ -41,16 +41,16 @@ public class BinarySearchTree {
 
 
     public BinarySearchTree() {
-        
+
     }
- 
+
     public void insert(int key) {
         root = put(root, key);
     }
 
     private Node put(Node x, int key) {
         if (x == null) return new Node(key);
-        if      (key < x.key) x.left  = put(x.left,  key);
+        if (key < x.key) x.left = put(x.left, key);
         else if (key > x.key) x.right = put(x.right, key);
         return x;
     }
@@ -58,16 +58,31 @@ public class BinarySearchTree {
     /**
      * Return the list that contains the elements in decreasing order
      * The complexity should be Theta(n) where n is the number of elements in the set.
+     *
      * @return
      */
     public List<Integer> decreasing() {
-        // TODO
-         return null;
+        List<Integer> result = new LinkedList<>();
+        InOrder(root, result );
+        return result;
     }
 
+    public void InOrder(Node node, List<Integer> result) {
+        if (node == null)
+            return;
+        // à droitr
+        InOrder(node.right, result);
+        result.add(node.key);
+        // à gauche
+        InOrder(node.left, result);
 
-
-
-
-
+    }
 }
+
+
+
+
+
+
+
+
