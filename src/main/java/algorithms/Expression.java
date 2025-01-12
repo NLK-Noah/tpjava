@@ -34,8 +34,7 @@ public abstract class Expression {
      * @return the expression 'v'
      */
     public static Expression value(double v) {
-         return null;
-    }
+    return null;}
 
     /**
      * Creates the binary expression 'this + r'
