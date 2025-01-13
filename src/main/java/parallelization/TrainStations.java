@@ -1,6 +1,7 @@
 package parallelization;
 
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -77,9 +78,18 @@ public class TrainStations {
                                                       Optional<Station> station2) {
         if (station1 == null || station2 == null) {
             throw new IllegalArgumentException();
+        } else if (station1==null && station2 == null) {
+            return Optional.empty();
+        }
+        double d = station1.map(station -> distanceFunction.compute(passenger, station.getLocation()))
+                .orElse(Double.MAX_VALUE);
+        double  f = station2.map(station -> distanceFunction.compute(passenger,station.getLocation())).orElse(Double.MAX_VALUE);
+        if (f>d){
+            return station1;
+        }else {
+            return station2;
         }
 
-         return null;  // TODO
     }
 
 
@@ -110,9 +120,17 @@ public class TrainStations {
                                                                  int end) {
         if (start < 0 || start > end || end > stations.length) {
             throw new IllegalArgumentException();
+        } else if (stations.length == 0) {
+            return Optional.empty();
         }
 
-         return null;  // TODO
+        Optional<Station> closestStation = Optional.empty();
+        for (int i = start; i < end; i++) {
+            Station station1 = stations[i];
+            closestStation = getClosestStation(passenger,distanceFunction, Optional.ofNullable(station1),closestStation);
+        }
+
+        return closestStation;
     }
 
 
@@ -141,6 +159,55 @@ public class TrainStations {
                                                                DistanceFunction distanceFunction,
                                                                Station[] stations,
                                                                ExecutorService executorService) {
-         return null;  // TODO
+
+        int end1 = stations.length / 2;
+        int end = stations.length;
+        int start2 = end1;
+        int start = 0;
+        Optional<Station> closestStation = Optional.empty();
+        Optional<Station> closestStation2 = Optional.empty();
+
+        // Task for first half of the stations
+        Callable<Optional<Station>> task1 = () -> {
+            try {
+                return findClosestStationSequential(passenger, distanceFunction, stations, start, end1);
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+        };
+
+        // Task for second half of the stations
+        Callable<Optional<Station>> task2 = () -> {
+            try {
+                return findClosestStationSequential(passenger, distanceFunction, stations, start2, end);
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+        };
+
+        // Submit tasks to the executor
+        Future<Optional<Station>> future1 = executorService.submit(task1);
+        Future<Optional<Station>> future2 = executorService.submit(task2);
+
+        try {
+            // Get results from both tasks
+            Optional<Station> close1 = future1.get();
+            Optional<Station> close2 = future2.get();
+
+            // Compare the distances and return the closest station
+            if (close1.isPresent() && close2.isPresent()) {
+                double distance1 = distanceFunction.compute(passenger, close1.get().getLocation());
+                double distance2 = distanceFunction.compute(passenger, close2.get().getLocation());
+                return distance1 < distance2 ? close1 : close2;
+            } else {
+                // Return whichever is present
+                return close1.isPresent() ? close1 : close2;
+            }
+
+        } catch (InterruptedException | ExecutionException e) {
+            // Handle exceptions related to multithreading and return null
+            return Optional.empty();
+        }
     }
+
 }
