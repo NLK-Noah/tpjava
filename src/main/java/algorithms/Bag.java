@@ -96,42 +96,70 @@ class BagImpl implements Bag {
     private Map<Integer, Integer> bag;
 
     public BagImpl() {
-		bag = new HashMap<>();
+        bag = new HashMap<>();
     }
 
     @Override
     public void add(int o) {
-		bag.merge(o, 1, Integer::sum);
+        bag.merge(o, 1, Integer::sum);
 
     }
 
     @Override
     public void remove(int o) {
-		bag.merge(o, 0, Integer::sum);
+        bag.computeIfPresent(o, (key, value) -> value > 1 ? value - 1 : null);
+        ;
 
     }
 
     @Override
     public boolean isEmpty() {
-		bag.clear();
-         return false;
+        return bag.isEmpty();
     }
 
     @Override
     public int count(int o) {
-		// TODO
-         return 0;
+
+        return bag.getOrDefault(o, 0);
     }
 
     @Override
     public Bag filter(Predicate<Integer> filter) {
-		// TODO
-         return null;
+        Bag b = new BagImpl();
+        for (Map.Entry<Integer, Integer> entry : bag.entrySet()) {
+            if (filter.test(entry.getKey())) {
+                for (int i = 0; i < entry.getValue(); i++) {
+                    b.add(entry.getKey());
+                }
+            }
+        }
+        return b;
     }
 
     @Override
     public Iterator<Integer> iterator() {
-		// TODO
-         return null;
+        return new Iterator<Integer>() {
+            private final Iterator<Map.Entry<Integer, Integer>> entryIterator = bag.entrySet().iterator();
+            private Map.Entry<Integer, Integer> current = null;
+            private int occurrencesLeft = 0;
+
+            @Override
+            public boolean hasNext() {
+                // Vérifie s'il reste des occurrences ou des entrées
+                return occurrencesLeft > 0 || entryIterator.hasNext();
+            }
+
+            @Override
+            public Integer next() {
+                // Si plus d'occurrences, avance au prochain élément
+                if (occurrencesLeft == 0) {
+                    current = entryIterator.next();
+                    occurrencesLeft = current.getValue();
+                }
+                // Décrémente les occurrences restantes et retourne la clé actuelle
+                occurrencesLeft--;
+                return current.getKey();
+            }
+        };
     }
 }
