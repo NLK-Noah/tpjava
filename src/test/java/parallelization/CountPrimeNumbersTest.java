@@ -89,6 +89,7 @@ public class CountPrimeNumbersTest {
         assertEquals(25, executeCallable(-1000, 98));
         assertEquals(6, executeCallable(70, 100));
         assertEquals(1061, executeCallable(1000, 10000));
+        // error ici
         assertEquals(114, executeRunnable(5000, 6000));
     }
         

@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.lang.Math;
 
 /**
  * In this exercise, you have to count the number of prime numbers in
@@ -43,7 +44,7 @@ public class CountPrimeNumbers {
             return counter;
         }
     }
-    
+
 
     /**
      * Check whether the given number is prime. A prime is an integer
@@ -55,8 +56,14 @@ public class CountPrimeNumbers {
      * @return true if the number is prime, false otherwise.
      */
     public static boolean isPrime(int number) {
-        // TODO
-         return true;
+        if(number <= 1) {
+            return false;
+        }for(int i = 2;i<= Math.sqrt(number) ;i++) {
+            if(number % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -70,8 +77,13 @@ public class CountPrimeNumbers {
      */
     public static int countPrimesInInterval(int start,
                                             int end) {
-        // TODO
-         return 0;
+        int count = 0;
+        for (int i = start; i <= end-1; i++) {
+            if(isPrime(i)) {
+                count++;
+            }
+        }
+        return count;
     }
 
 
@@ -89,12 +101,12 @@ public class CountPrimeNumbers {
          **/
         CountPrimesCallable(int start,
                             int end) {
-            // TODO
+            this.start = start;
+            this.end = end;
         }
 
         public Integer call() {
-            // TODO
-             return 0;
+            return countPrimesInInterval(start, end);
         }
     }
 
@@ -124,7 +136,7 @@ public class CountPrimeNumbers {
          **/
         public int getResult() {
             // TODO
-             return 0;
+            return 0;
         }
     }
 
@@ -169,7 +181,7 @@ public class CountPrimeNumbers {
      * you have to count the numbers "x" such that x is prime, and "x
      * < end").
      * @param countIntervals The number of intervals to be processed
-     * by Future. 
+     * by Future.
      * @return The number of prime numbers below "end".
      *
      * NOTES:
@@ -185,7 +197,7 @@ public class CountPrimeNumbers {
                                               int end,
                                               int countIntervals) throws InterruptedException, ExecutionException {
         // TODO
-         return 0;
+        return 0;
     }
 
 
@@ -197,7 +209,7 @@ public class CountPrimeNumbers {
                                               int end,
                                               int countIntervals) throws InterruptedException, ExecutionException {
         // TODO
-         return 0;
+        return 0;
     }
 
 
