@@ -1,12 +1,13 @@
 package parallelization;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ExamGrader {
 
-    // You can add new methods, inner classes, etc.
+
 
     public interface RoundingFunction {
         int roundGrade(double grade);
@@ -49,7 +50,14 @@ public class ExamGrader {
      *  the list of questions is not empty.
      */
     public static int calculateExamGrade(ExamQuestion questions, RoundingFunction roundingFunction) {
-         return 0;
+        double grades =0;
+        ExamQuestion current = questions;
+        while (current != null) {
+            grades += current.getPointsObtained();
+            current = current.getNextQuestion();
+        }
+
+        return roundingFunction.roundGrade(grades);
     }
 
 
@@ -66,7 +74,33 @@ public class ExamGrader {
      * You MUST use threads (or a threadpool).
      * Catch (and ignore) all exceptions.
      */
-    public static int[] gradeExams(ExamQuestion exam1, ExamQuestion exam2, RoundingFunction roundingFunction) {
-         return null;
+    public static int[] gradeExams(ExamQuestion exam1, ExamQuestion exam2, RoundingFunction roundingFunction)  {
+        int[] grades= new int[2];
+        class Mythreads extends Thread {
+            private ExamQuestion question;
+            private int index;
+            public Mythreads(ExamQuestion question, int index) {
+                this.question = question;
+                this.index = index;
+            }
+
+            public void run() {
+                try{
+                    grades[index] = calculateExamGrade(question, roundingFunction);
+                }catch(Exception e) {
+                }
+
+            }
+        }
+        Mythreads thread1 = new Mythreads(exam1, 0);
+        Mythreads thread2 = new Mythreads(exam2, 1);
+        thread1.start();
+        thread2.start();
+        try{
+            thread1.join();
+            thread2.join();
+        }catch(Exception e) {}
+
+         return grades ;
     }
 }
