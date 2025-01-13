@@ -21,14 +21,14 @@ import java.util.*;
  */
 public class BestTimeTracker implements Iterable<String> {
 
-    // TODO: add instance variables of your choice
-
+    private Map<String, Double> bestTimes;
     /**
      * Constructs an empty BestTimeTracker.
      */
     public BestTimeTracker() {
-        // TODO: implement the constructor
+        bestTimes=  new HashMap<>();
     }
+
 
     /**
      * Adds a new time for a participant.
@@ -39,7 +39,14 @@ public class BestTimeTracker implements Iterable<String> {
      * @param time        the time to record
      */
     public void addTime(String participant, double time) {
-        // TODO
+        if(bestTimes.containsKey(participant)) {
+            Double currentTime = bestTimes.get(participant);
+            if(currentTime > time) {
+                bestTimes.put(participant, time);
+            }
+        }else{
+            bestTimes.put(participant, time);
+        }
     }
 
     /**
@@ -49,7 +56,15 @@ public class BestTimeTracker implements Iterable<String> {
      * @return the best time recorded for the participant, or null if the participant has no recorded time
      */
     public Double getBestTime(String participant) {
-         return -1.0;  // TODO
+        Double currentTime = 0.0;
+        if(bestTimes.containsKey(participant)) {
+            if(bestTimes.get(participant) > currentTime) {
+                currentTime = bestTimes.get(participant);
+            }
+        }else{
+            currentTime = null;
+        }
+         return currentTime;
     }
 
     /**
@@ -66,7 +81,7 @@ public class BestTimeTracker implements Iterable<String> {
      */
     @Override
     public Iterator<String> iterator() {
-         return null;  // TODO
+         return bestTimes.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).iterator();  // TODO
     }
 
     public static void main(String[] args) {
