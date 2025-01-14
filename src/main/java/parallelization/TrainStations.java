@@ -81,8 +81,7 @@ public class TrainStations {
         } else if (station1==null && station2 == null) {
             return Optional.empty();
         }
-        double d = station1.map(station -> distanceFunction.compute(passenger, station.getLocation()))
-                .orElse(Double.MAX_VALUE);
+        double d = station1.map(station -> distanceFunction.compute(passenger, station.getLocation())).orElse(Double.MAX_VALUE);
         double  f = station2.map(station -> distanceFunction.compute(passenger,station.getLocation())).orElse(Double.MAX_VALUE);
         if (f>d){
             return station1;
@@ -127,7 +126,7 @@ public class TrainStations {
         Optional<Station> closestStation = Optional.empty();
         for (int i = start; i < end; i++) {
             Station station1 = stations[i];
-            closestStation = getClosestStation(passenger,distanceFunction, Optional.ofNullable(station1),closestStation);
+            closestStation = getClosestStation(passenger,distanceFunction,Optional.of(station1),closestStation);
         }
 
         return closestStation;
@@ -167,7 +166,7 @@ public class TrainStations {
         Optional<Station> closestStation = Optional.empty();
         Optional<Station> closestStation2 = Optional.empty();
 
-        // Task for first half of the stations
+        
         Callable<Optional<Station>> task1 = () -> {
             try {
                 return findClosestStationSequential(passenger, distanceFunction, stations, start, end1);
@@ -176,7 +175,7 @@ public class TrainStations {
             }
         };
 
-        // Task for second half of the stations
+
         Callable<Optional<Station>> task2 = () -> {
             try {
                 return findClosestStationSequential(passenger, distanceFunction, stations, start2, end);
@@ -185,28 +184,29 @@ public class TrainStations {
             }
         };
 
-        // Submit tasks to the executor
+
         Future<Optional<Station>> future1 = executorService.submit(task1);
         Future<Optional<Station>> future2 = executorService.submit(task2);
 
         try {
-            // Get results from both tasks
+
             Optional<Station> close1 = future1.get();
             Optional<Station> close2 = future2.get();
 
-            // Compare the distances and return the closest station
+
             if (close1.isPresent() && close2.isPresent()) {
                 double distance1 = distanceFunction.compute(passenger, close1.get().getLocation());
                 double distance2 = distanceFunction.compute(passenger, close2.get().getLocation());
                 return distance1 < distance2 ? close1 : close2;
             } else {
-                // Return whichever is present
+
                 return close1.isPresent() ? close1 : close2;
             }
 
         } catch (InterruptedException | ExecutionException e) {
-            // Handle exceptions related to multithreading and return null
             return Optional.empty();
+        }finally {
+
         }
     }
 
